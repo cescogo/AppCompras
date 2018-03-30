@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.pc.proyecto.Actividad1">
+
+    <EditText
+        android:id="@+id/text_nombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="72dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="50dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name" />
+
+    <EditText
+        android:id="@+id/text_categoria"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/text_nombre"
+        android:layout_alignRight="@+id/text_nombre"
+        android:layout_below="@+id/text_nombre"
+        android:layout_marginTop="28dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="categoria" />
+
+    <EditText
+        android:id="@+id/text_precio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/text_categoria"
+        android:layout_alignRight="@+id/text_categoria"
+        android:layout_below="@+id/text_categoria"
+        android:layout_marginTop="25dp"
+        android:ems="10"
+        android:inputType="number"
+        android:text="Precio" />
+
+    <Button
+        android:id="@+id/btn_agregar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/text_precio"
+        android:layout_alignStart="@+id/text_precio"
+        android:layout_below="@+id/text_precio"
+        android:layout_marginTop="69dp"
+        android:text="agregar" />
+
+    <Button
+        android:id="@+id/btn_ver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btn_agregar"
+        android:layout_alignBottom="@+id/btn_agregar"
+        android:layout_marginLeft="27dp"
+        android:layout_marginStart="27dp"
+        android:layout_toEndOf="@+id/btn_agregar"
+        android:layout_toRightOf="@+id/btn_agregar"
+        android:text="ver productos" />
+</RelativeLayout>
