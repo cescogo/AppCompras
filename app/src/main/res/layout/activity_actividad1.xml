@@ -13,12 +13,13 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="72dp"
-        android:layout_marginStart="72dp"
+        android:layout_marginLeft="74dp"
+        android:layout_marginStart="74dp"
         android:layout_marginTop="50dp"
         android:ems="10"
+        android:hint="Nombre"
         android:inputType="textPersonName"
-        android:text="Name" />
+        android:singleLine="false" />
 
     <EditText
         android:id="@+id/text_categoria"
@@ -29,8 +30,8 @@
         android:layout_below="@+id/text_nombre"
         android:layout_marginTop="28dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="categoria" />
+        android:hint="Categoria"
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/text_precio"
@@ -41,8 +42,8 @@
         android:layout_below="@+id/text_categoria"
         android:layout_marginTop="25dp"
         android:ems="10"
-        android:inputType="number"
-        android:text="Precio" />
+        android:hint="Precio"
+        android:inputType="number" />
 
     <Button
         android:id="@+id/btn_agregar"

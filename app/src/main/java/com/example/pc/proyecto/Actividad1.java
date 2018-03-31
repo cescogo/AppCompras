@@ -45,6 +45,9 @@ public class Actividad1 extends AppCompatActivity {
                 if(aux)
                 {
                     Mensaje("se agrego con exito");
+                    nombreProducto.setText("");
+                    categoriaProducto.setText("");
+                    precioProducto.setText("");
                 }
                 else
                 {
