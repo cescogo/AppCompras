@@ -2,6 +2,7 @@ package com.example.pc.proyecto;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -64,6 +65,21 @@ public class Actividad1 extends AppCompatActivity {
             {
                 Intent intento = new Intent(getApplicationContext(), ActividadProductos.class);
                 startActivity(intento);
+            }
+        });
+
+
+        Button sup= (Button) findViewById(R.id.btn_maps);
+        sup.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                Log.i("onclick","si");
+                Intent intento = new Intent(getApplicationContext(), MapsActivity.class);
+                Log.i("creo el intento","si");
+                startActivity(intento);
+                Log.i("inicio el intento","si");
+
             }
         });
     }

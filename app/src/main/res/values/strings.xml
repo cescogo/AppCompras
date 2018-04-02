@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">proyecto</string>
+    <string name="title_activity_supers_market">Map</string>
+    <string name="title_activity_maps">Super Mercados Cercanos</string>
 </resources>
