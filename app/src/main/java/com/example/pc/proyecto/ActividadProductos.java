@@ -12,10 +12,13 @@ import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -32,6 +35,7 @@ public class ActividadProductos extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actividad_productos);
+        llenar_spinner();
         basedatos=BaseDeDatos.getInstance(this);
 
         initializeList();
@@ -65,7 +69,7 @@ public class ActividadProductos extends AppCompatActivity {
             CheckBox ch= new CheckBox(this);
             ch.setId(i);
             ch.setText(productosList.get(i).getNombre());
-            chs.add(ch);
+
             panel.addView(ch);
 
         }
@@ -110,7 +114,50 @@ public class ActividadProductos extends AppCompatActivity {
         alert11.show();
         ;}
 
+    public void llenar_spinner()
+    {
+        Spinner s1;
+        final String[] presidents = {
+                "todas",
+                "Papelería y Limpieza",
+                "Bebidas",
+                "Carnes",
+                "Higiene personal",
+                "Platillos congelados preparados",
+                "lácteos",
+                "Frutas",
+                "verduras",
+                "huevos",
+                "Abarrotes",
+                "Panadería y postres",
+                "salsas"
+        };
 
+        //---Spinner View---
+        s1 = (Spinner) findViewById(R.id.sp_categorias2);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this, android.R.layout.simple_spinner_item, presidents);
+
+
+
+
+        s1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
+                LinearLayout panel= (LinearLayout) findViewById(R.id.linear_producs);
+               
+                Mensaje("se cambio la categoria");
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        s1.setAdapter(adapter);
+
+
+    }
 
 
 

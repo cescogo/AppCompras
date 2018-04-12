@@ -6,6 +6,11 @@
     android:layout_height="match_parent"
     tools:context="com.example.pc.proyecto.ActividadProductos">
 
+    <Spinner
+        android:id="@+id/sp_categorias2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <Button
         android:id="@+id/btn_atras"
         android:layout_width="wrap_content"
@@ -20,7 +25,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="401dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
