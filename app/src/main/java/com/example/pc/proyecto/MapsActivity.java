@@ -4,6 +4,8 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -22,6 +24,9 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.IOException;
+import java.util.List;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -35,7 +40,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Log.i("oncreate maps", "si");
         int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
         if (status == ConnectionResult.SUCCESS) {
-            Log.i("if", "si");
+            Toast.makeText(this, "on create", Toast.LENGTH_LONG).show();
             // Obtain the SupportMapFragment and get notified when the map is ready to be used.
             SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.map);
@@ -59,16 +64,38 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        Toast.makeText(this, "opcion 1", Toast.LENGTH_LONG).show();
         mMap = googleMap;
         // Controles UI
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
+           Toast.makeText(this, "if 1", Toast.LENGTH_LONG).show();
+
+            Geocoder geo = new Geocoder(MapsActivity.this);
+            int maxResultados = 7;
+            List<Address> adress = null;
+
+
+            try {
+                adress= geo.getFromLocationName("ulloa",5);
+
+                //adress = geo.getFromLocationName("supermercados", maxResultados);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Address dir=adress.get(0);
+            LatLng ubicacion = new LatLng(dir.getLatitude(),dir.getLongitude());
+            mMap.addMarker(new MarkerOptions().position(ubicacion).title("from geocoder"));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ubicacion,7f));
             mMap.setMyLocationEnabled(true);
+            mMap.getUiSettings().setCompassEnabled(true);
         } else {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.ACCESS_FINE_LOCATION)) {
+                Toast.makeText(this, "opcion 2", Toast.LENGTH_LONG).show();
                 // Mostrar diálogo explicativo
             } else {
+                Toast.makeText(this, "opcion 3", Toast.LENGTH_LONG).show();
                 // Solicitar permiso
                 ActivityCompat.requestPermissions(
                         this,
@@ -78,10 +105,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         mMap.getUiSettings().setZoomControlsEnabled(true);
-        mMap.getUiSettings().setCompassEnabled(true);
 
-        // Marcadores
-        //mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)));
 
 
     }
@@ -89,6 +113,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
+        Toast.makeText(this, "opcion 2", Toast.LENGTH_LONG).show();
         if (requestCode == LOCATION_REQUEST_CODE) {
             // ¿Permisos asignados?
             if (permissions.length > 0 &&
@@ -96,6 +121,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     // TODO: Consider calling
+                    // LatLng sydney = new LatLng(9.2878947, -83.330359);
+                    //mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
                     //    ActivityCompat#requestPermissions
                     // here to request the missing permissions, and then overriding
                     //   public void onRequestPermissionsResult(int requestCode, String[] permissions,

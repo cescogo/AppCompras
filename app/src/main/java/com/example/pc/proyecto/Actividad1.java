@@ -7,9 +7,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 import static java.security.AccessController.getContext;
 
@@ -21,21 +27,21 @@ public class Actividad1 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actividad1);
+        llenar_spinner();
         basedatos=new BaseDeDatos(this);
         Button agreg= (Button) findViewById(R.id.btn_agregar);
+
         agreg.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)
             {
                 EditText nombreProducto = (EditText) findViewById(R.id.text_nombre);
-                EditText categoriaProducto = (EditText) findViewById(R.id.text_categoria);
+                Spinner categoriaProducto = (Spinner) findViewById(R.id.sp_categoria);
                 EditText precioProducto = (EditText) findViewById(R.id.text_precio);
                 String nom=nombreProducto.getText().toString();
-                String cat=categoriaProducto.getText().toString();
+                String cat=categoriaProducto.getSelectedItem().toString();
                 String pre=precioProducto.getText().toString();
-                Log.i("nombre",nom.toString());
-                Log.i("catego",cat.toString());
-                Log.i("precio",pre.toString());
+
                 Producto c=new Producto();
                 c.setNombre(nom);
                 c.setCategoria(cat);
@@ -47,7 +53,7 @@ public class Actividad1 extends AppCompatActivity {
                 {
                     Mensaje("se agrego con exito");
                     nombreProducto.setText("");
-                    categoriaProducto.setText("");
+                    categoriaProducto.setSelection(0);
                     precioProducto.setText("");
                 }
                 else
@@ -85,7 +91,50 @@ public class Actividad1 extends AppCompatActivity {
     }
 
     public void Mensaje(String msg){
-        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();};
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();}
+
+        public void llenar_spinner()
+        {
+            Spinner s1;
+            final String[] presidents = {
+                    "seleccione una categoria",
+                    "Papelería y Limpieza",
+                    "Bebidas",
+                    "Carnes",
+                    "Higiene personal",
+                    "Platillos congelados preparados",
+                    "lácteos",
+                    "Frutas",
+                    "verduras",
+                    "huevos",
+                    "Abarrotes",
+                    "Panadería y postres",
+                    "salsas"
+            };
+
+            //---Spinner View---
+            s1 = (Spinner) findViewById(R.id.sp_categoria);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                    this, android.R.layout.simple_spinner_item, presidents);
+
+
+
+
+            s1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view,
+                                           int position, long id) {
+
+                }
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                }
+            });
+
+            s1.setAdapter(adapter);
+
+
+            }
 
 
 }
