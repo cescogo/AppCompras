@@ -31,6 +31,7 @@ public class ActividadProductos extends AppCompatActivity {
    // RecyclerView estudiantesRecycler;
     BaseDeDatos basedatos;
     ArrayList<View> chs= new ArrayList<>();
+    private Producto prod;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,11 +67,23 @@ public class ActividadProductos extends AppCompatActivity {
 
         for(int i=0; i<productosList.size();i++)
         {
-            CheckBox ch= new CheckBox(this);
+
+            final CheckBox ch= new CheckBox(this);
             ch.setId(i);
             ch.setText(productosList.get(i).getNombre());
 
+            ch.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    prod= productosList.get(ch.getId());
+                    MensajeOK("nombre del producto: "+prod.getNombre()+"\n"+"categoria: "+prod.getCategoria()+"\n"+"precio : "+prod.getPrecio());
+                    return true;
+                }
+            });
+
+
             panel.addView(ch);
+
 
         }
 
