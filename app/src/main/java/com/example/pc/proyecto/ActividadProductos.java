@@ -147,14 +147,14 @@ public class ActividadProductos extends AppCompatActivity {
                                        int position, long id) {
                 LinearLayout panel= (LinearLayout) findViewById(R.id.linear_producs);
                Spinner s1 = (Spinner) findViewById(R.id.sp_categorias2);
-                Mensaje("se cambio la categoria");
+
                 String aux= s1.getSelectedItem().toString();
                 if(aux=="Todas")
                 {
                     for(int i=0;i<productosList.size();i++)
                     {
                         panel.getChildAt(i).setVisibility(View.VISIBLE);
-                        panel.getChildAt(i).setY(i*50);
+                        panel.getChildAt(i).setY(i*80);
                     }
 
                 }
@@ -173,7 +173,7 @@ public class ActividadProductos extends AppCompatActivity {
                         else {
                             panel.getChildAt(i).setVisibility(View.VISIBLE);
                             panel.getChildAt(i).setY(cont);
-                            cont+=50;
+                            cont+=80;
                         }
 
                     }
