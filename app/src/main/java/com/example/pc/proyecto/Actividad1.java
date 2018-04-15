@@ -97,19 +97,19 @@ public class Actividad1 extends AppCompatActivity {
         {
             Spinner s1;
             final String[] presidents = {
-                    "seleccione una categoria",
+                    "Seleccione una categoria",
                     "Papelería y Limpieza",
                     "Bebidas",
                     "Carnes",
                     "Higiene personal",
                     "Platillos congelados preparados",
-                    "lácteos",
+                    "Lácteos",
                     "Frutas",
-                    "verduras",
-                    "huevos",
+                    "Verduras",
+                    "Huevos",
                     "Abarrotes",
                     "Panadería y postres",
-                    "salsas"
+                    "Salsas"
             };
 
             //---Spinner View---

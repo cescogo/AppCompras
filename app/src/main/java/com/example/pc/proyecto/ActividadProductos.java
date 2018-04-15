@@ -118,19 +118,19 @@ public class ActividadProductos extends AppCompatActivity {
     {
         Spinner s1;
         final String[] presidents = {
-                "todas",
+                "Todas",
                 "Papelería y Limpieza",
                 "Bebidas",
                 "Carnes",
                 "Higiene personal",
                 "Platillos congelados preparados",
-                "lácteos",
+                "Lácteos",
                 "Frutas",
-                "verduras",
-                "huevos",
+                "Verduras",
+                "Huevos",
                 "Abarrotes",
                 "Panadería y postres",
-                "salsas"
+                "Salsas"
         };
 
         //---Spinner View---
@@ -146,8 +146,38 @@ public class ActividadProductos extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
                 LinearLayout panel= (LinearLayout) findViewById(R.id.linear_producs);
-               
+               Spinner s1 = (Spinner) findViewById(R.id.sp_categorias2);
                 Mensaje("se cambio la categoria");
+                String aux= s1.getSelectedItem().toString();
+                if(aux=="Todas")
+                {
+                    for(int i=0;i<productosList.size();i++)
+                    {
+                        panel.getChildAt(i).setVisibility(View.VISIBLE);
+                        panel.getChildAt(i).setY(i*50);
+                    }
+
+                }
+                else
+                {
+                    int cont=0;
+                    for(int i=0;i<productosList.size();i++)
+                    {
+                        if(!aux.toString().equals(productosList.get(i).getCategoria()))
+                        {
+                            panel.getChildAt(i).setVisibility(View.INVISIBLE);
+                            panel.getChildAt(i).setY(0);
+
+                            // panel.getChildAt(i).setEnabled(false);
+                        }
+                        else {
+                            panel.getChildAt(i).setVisibility(View.VISIBLE);
+                            panel.getChildAt(i).setY(cont);
+                            cont+=50;
+                        }
+
+                    }
+                }
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
