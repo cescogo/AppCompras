@@ -1,5 +1,6 @@
 package com.example.pc.proyecto;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -144,6 +145,7 @@ public class Actividad1 extends AppCompatActivity {
                 getMenuInflater().inflate(R.menu.menu_popup, menu);
         return true;
     }
+    @SuppressLint("NewApi")
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
@@ -152,7 +154,8 @@ public class Actividad1 extends AppCompatActivity {
                 startActivity(intento);
                 ; break;
             case R.id.it_cancel:
-                System.exit(0);// this.finish();  Usar en la actividad principal.
+
+                finishAffinity(); // La cerramos.
                 ; break;
 
             default: Mensaje("No clasificado"); break;
