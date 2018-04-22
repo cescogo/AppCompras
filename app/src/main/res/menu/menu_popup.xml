@@ -3,8 +3,8 @@
 
     <item
         android:id="@+id/it_descrip"
-        android:title="descripcion" />
+        android:title="Integrantes" />
     <item
         android:id="@+id/it_cancel"
-        android:title="Cancelar" />
+        android:title="Cerrar" />
 </menu>

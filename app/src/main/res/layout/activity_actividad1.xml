@@ -46,32 +46,34 @@
         android:id="@+id/btn_agregar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/btn_ver"
-        android:layout_marginStart="66dp"
-        android:text="agregar"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="66dp" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/text_precio"
+        android:layout_marginLeft="51dp"
+        android:layout_marginStart="51dp"
+        android:layout_marginTop="23dp"
+        android:background="@color/colorPrimary"
+        android:text="agregar" />
 
     <Button
         android:id="@+id/btn_ver"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="147dp"
-        android:layout_marginEnd="45dp"
-        android:text="ver productos"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="45dp" />
+        android:layout_alignLeft="@+id/btn_agregar"
+        android:layout_alignStart="@+id/btn_agregar"
+        android:layout_below="@+id/btn_agregar"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="ver productos" />
 
     <Button
         android:id="@+id/btn_maps"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="87dp"
+        android:layout_alignLeft="@+id/btn_ver"
+        android:layout_alignStart="@+id/btn_ver"
+        android:layout_below="@+id/btn_agregar"
+        android:layout_marginTop="45dp"
+        android:backgroundTint="@color/colorPrimary"
         android:text="super cercanos" />
 
 </RelativeLayout>

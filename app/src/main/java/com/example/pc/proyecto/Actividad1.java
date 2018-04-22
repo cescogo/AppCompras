@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -93,48 +95,68 @@ public class Actividad1 extends AppCompatActivity {
     public void Mensaje(String msg){
         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();}
 
-        public void llenar_spinner()
-        {
-            Spinner s1;
-            final String[] presidents = {
-                    "Seleccione una categoria",
-                    "Papelería y Limpieza",
-                    "Bebidas",
-                    "Carnes",
-                    "Higiene personal",
-                    "Platillos congelados preparados",
-                    "Lácteos",
-                    "Frutas",
-                    "Verduras",
-                    "Huevos",
-                    "Abarrotes",
-                    "Panadería y postres",
-                    "Salsas"
-            };
+    public void llenar_spinner()
+    {
+        Spinner s1;
+        final String[] presidents = {
+                "Seleccione una categoria",
+                "Papelería y Limpieza",
+                "Bebidas",
+                "Carnes",
+                "Higiene personal",
+                "Platillos congelados preparados",
+                "Lácteos",
+                "Frutas",
+                "Verduras",
+                "Huevos",
+                "Abarrotes",
+                "Panadería y postres",
+                "Salsas"
+        };
 
-            //---Spinner View---
-            s1 = (Spinner) findViewById(R.id.sp_categoria);
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                    this, android.R.layout.simple_spinner_item, presidents);
-
-
+        //---Spinner View---
+        s1 = (Spinner) findViewById(R.id.sp_categoria);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                this, android.R.layout.simple_spinner_item, presidents);
 
 
-            s1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view,
-                                           int position, long id) {
 
-                }
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-                }
-            });
 
-            s1.setAdapter(adapter);
-
+        s1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view,
+                                       int position, long id) {
 
             }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+        s1.setAdapter(adapter);
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+                getMenuInflater().inflate(R.menu.menu_popup, menu);
+        return true;
+    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.it_descrip:
+                Intent intento = new Intent(getApplicationContext(), Integrantes.class);
+                startActivity(intento);
+                ; break;
+            case R.id.it_cancel:
+                System.exit(0);// this.finish();  Usar en la actividad principal.
+                ; break;
+
+            default: Mensaje("No clasificado"); break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

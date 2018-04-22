@@ -82,82 +82,7 @@ public class BaseDeDatos extends SQLiteOpenHelper {
         }
     }
 
-   // buscar producto
-   /*
-    public Estudiante buscarEstudiante(String nombre, String apellido1, String apellido2, int edad){
-        try{
-            SQLiteDatabase db=this.getReadableDatabase();
-            String query= "select * from Estudiante where nombre='"+nombre+"' and apellido1='"+apellido1+"' and apellido2='"+apellido2+"' and edad='"+edad+"';";
-            Cursor cursor = db.rawQuery(query,null);
-            Estudiante aux=new Estudiante();
-            aux.setId(cursor.getInt(cursor.getColumnIndexOrThrow("id")));
-            aux.setNombre(cursor.getString(cursor.getColumnIndexOrThrow("nombre")));
-            aux.setApellido1(cursor.getString(cursor.getColumnIndexOrThrow("apellido1")));
-            aux.setApellido2(cursor.getString(cursor.getColumnIndexOrThrow("apellido2")));
-            aux.setEdad(cursor.getInt(cursor.getColumnIndexOrThrow("edad")));
-
-
-            return aux;
-
-        }catch (SQLiteException ex){
-            Log.e("Base de Datos", "Excepcion en bucarEstudiante", ex);
-            return null;
-        }
-    }*/
-
-// producto por di
-    /*
-    public Estudiante estudianteById(int id){
-        try{
-            SQLiteDatabase db=this.getReadableDatabase();
-            String query= "select * from Estudiante where id='"+id+"';";
-            Cursor cursor = db.rawQuery(query,null);
-
-            if (cursor.moveToFirst()) {
-                while (!cursor.isAfterLast()) {
-                    Estudiante aux=new Estudiante();
-                    aux.setId(cursor.getInt(cursor.getColumnIndexOrThrow("id")));
-                    aux.setNombre(cursor.getString(cursor.getColumnIndexOrThrow("nombre")));
-                    aux.setApellido1(cursor.getString(cursor.getColumnIndexOrThrow("apellido1")));
-                    aux.setApellido2(cursor.getString(cursor.getColumnIndexOrThrow("apellido2")));
-                    aux.setEdad(cursor.getInt(cursor.getColumnIndexOrThrow("edad")));
-                    return aux;
-                }
-            }
-            return null;
-
-        }catch (SQLiteException ex){
-            Log.e("Base de Datos", "Excepcion en estudianteById", ex);
-            return null;
-        }
-    }*/
-
-    /*
-    public boolean updateEstudiante(Estudiante e){
-        try{
-            SQLiteDatabase db=this.getWritableDatabase();
-            db.execSQL("update Estudiante set nombre='"+e.getNombre()+"', apellido1='"+e.getApellido1()+"', apellido2='"+e.getApellido2()+"', edad='"+e.getEdad()+"' where id="+e.getId()+";");
-            return true;
-        }catch (SQLiteException ex){
-            Log.e("Base de Datos", "Excepcion en updateEstudiante", ex);
-            return false;
-        }
-    }*/
-
-    /*
-
-    public boolean deleteEstudiante(Estudiante e){
-        try{
-            SQLiteDatabase db=this.getWritableDatabase();
-            db.execSQL("delete from Estudiante where id="+e.getId()+";");
-            return true;
-        }catch (SQLiteException ex){
-            Log.e("Base de Datos", "Excepcion en deleteEstudiante", ex);
-            return false;
-        }
-    }*/
-
-
+    //buscar producto
 
     public ArrayList<Producto> getListaProductos(){
         try{
@@ -183,37 +108,4 @@ public class BaseDeDatos extends SQLiteOpenHelper {
             return null;
         }
     }
-
-    /*
-    public ArrayList<Estudiante> getEstudiantesLike(String busqueda){
-        try{
-            SQLiteDatabase db=this.getReadableDatabase();
-            String query= "select * from Estudiante where id like '%%%"+busqueda+"%%%' or nombre like '%%%"+busqueda+"%%%' or apellido1 like '%%%"+busqueda+"%%%' or apellido2 like '%%%"+busqueda+"%%%' or edad like '%%%"+busqueda+"%%%';";
-
-            Cursor cursor = db.rawQuery(query,null);
-            ArrayList<Estudiante> lista=new ArrayList<>();
-            if (cursor.moveToFirst()) {
-                while (!cursor.isAfterLast()) {
-                    Estudiante aux=new Estudiante();
-                    aux.setId(cursor.getInt(cursor.getColumnIndexOrThrow("id")));
-                    aux.setNombre(cursor.getString(cursor.getColumnIndexOrThrow("nombre")));
-                    aux.setApellido1(cursor.getString(cursor.getColumnIndexOrThrow("apellido1")));
-                    aux.setApellido2(cursor.getString(cursor.getColumnIndexOrThrow("apellido2")));
-                    aux.setEdad(cursor.getInt(cursor.getColumnIndexOrThrow("edad")));
-                    lista.add(aux);
-                    cursor.moveToNext();
-                }
-            }
-
-            return lista;
-
-        }catch (SQLiteException ex){
-            Log.e("Base de Datos", "Excepcion en getListaEstudiantes", ex);
-            return null;
-        }
-    }*/
-
-
-
-
 }
