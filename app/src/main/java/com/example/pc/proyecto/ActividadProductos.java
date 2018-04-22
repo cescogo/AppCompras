@@ -3,31 +3,27 @@ package com.example.pc.proyecto;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.Iterator;
+import com.example.pc.proyecto.entities.Producto;
 
-import static java.security.AccessController.getContext;
+import java.util.ArrayList;
 
 public class ActividadProductos extends AppCompatActivity {
+
     ArrayList<Producto> productosList = new ArrayList<Producto>();
+
    // RecyclerView estudiantesRecycler;
     BaseDeDatos basedatos;
     ArrayList<View> chs= new ArrayList<>();
@@ -105,7 +101,7 @@ public class ActividadProductos extends AppCompatActivity {
 
             if(ch.isChecked())
             {
-                aux+=productosList.get(i).precio;
+                aux+=productosList.get(i).getPrecio();
             }
 
         }

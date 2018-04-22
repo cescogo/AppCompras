@@ -18,6 +18,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.pc.proyecto.entities.Producto;
+
 import java.util.ArrayList;
 
 import static java.security.AccessController.getContext;

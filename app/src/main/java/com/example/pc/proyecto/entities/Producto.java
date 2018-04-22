@@ -1,4 +1,4 @@
-package com.example.pc.proyecto;
+package com.example.pc.proyecto.entities;
 
 import java.io.Serializable;
 
