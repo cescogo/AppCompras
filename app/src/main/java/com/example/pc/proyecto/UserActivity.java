@@ -68,7 +68,7 @@ public class UserActivity extends AppCompatActivity{
         progress.setMessage("Cargando....");
         progress.show();
 
-        String ip = getString(R.string.ip);
+        String ip = getString(R.string.ip2);
         String url=ip+"/WebServer/wsJSONRegistroMovil.php?";
         stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
