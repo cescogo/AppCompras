@@ -116,9 +116,7 @@ public class UserActivity extends AppCompatActivity{
         progress.setMessage("Cargando...");
         progress.show();
 
-        final String ip=getString(R.string.ip);
-        edtUsername.setText("lobo");
-        edtPassword.setText("1234");
+        final String ip=getString(R.string.ip2);
         String url=ip+"/WebServer/wsJSONConsultarUsuario.php?nombre="+edtUsername.getText().toString()+
                 "&pass="+edtPassword.getText().toString();
 
@@ -136,12 +134,14 @@ public class UserActivity extends AppCompatActivity{
                     jsonObject=json.getJSONObject(0);
                     miUsuario.setNombre(jsonObject.optString("nombre"));
                     miUsuario.setPass(jsonObject.optString("pass"));
+                    if(!miUsuario.getNombre().equals("no registrado") && !miUsuario.getPass().equals("no registrado")) {
+                        Intent intent = new Intent(getApplicationContext(), ActividadProductos.class);
+                        startActivity(intent);
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
-                Intent intent = new Intent(getApplicationContext(), ActividadProductos.class);
-                startActivity(intent);
             }
         }, new Response.ErrorListener() {
             @Override
