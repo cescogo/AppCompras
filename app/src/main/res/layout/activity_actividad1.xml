@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,49 +11,74 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="68dp"
-        android:layout_marginTop="84dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="28dp"
         android:ems="10"
         android:hint="Nombre"
         android:inputType="textPersonName"
         android:singleLine="false"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="68dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/sp_categoria"
         android:layout_width="215dp"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/text_nombre"
         android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/text_nombre"
-        android:layout_marginTop="158dp"
-        android:layout_alignLeft="@+id/text_nombre" />
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_precio" />
 
     <EditText
         android:id="@+id/text_precio"
-        android:layout_width="wrap_content"
+        android:layout_width="213dp"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/text_nombre"
         android:layout_alignParentTop="true"
         android:layout_alignStart="@+id/text_nombre"
-        android:layout_marginTop="214dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
         android:ems="10"
         android:hint="Precio"
         android:inputType="number"
-        android:layout_alignLeft="@+id/text_nombre" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_nombre" />
 
     <Button
         android:id="@+id/btn_agregar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_width="129dp"
+        android:layout_height="45dp"
+        android:layout_alignParentLeft="false"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/text_precio"
-        android:layout_marginLeft="51dp"
-        android:layout_marginStart="51dp"
-        android:layout_marginTop="23dp"
+        android:layout_marginEnd="44dp"
+        android:layout_marginRight="44dp"
+        android:layout_marginTop="92dp"
         android:background="@color/colorPrimary"
-        android:text="agregar" />
+        android:text="agregar"
+        app:layout_constraintEnd_toStartOf="@+id/btn_ver"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sp_categoria" />
 
     <Button
         android:id="@+id/btn_ver"
@@ -62,8 +87,13 @@
         android:layout_alignLeft="@+id/btn_agregar"
         android:layout_alignStart="@+id/btn_agregar"
         android:layout_below="@+id/btn_agregar"
+        android:layout_marginEnd="44dp"
+        android:layout_marginRight="44dp"
+        android:layout_marginTop="84dp"
         android:backgroundTint="@color/colorPrimary"
-        android:text="ver productos" />
+        android:text="ver productos"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sp_categoria" />
 
     <Button
         android:id="@+id/btn_maps"
@@ -72,8 +102,19 @@
         android:layout_alignLeft="@+id/btn_ver"
         android:layout_alignStart="@+id/btn_ver"
         android:layout_below="@+id/btn_agregar"
-        android:layout_marginTop="45dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="136dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="136dp"
+        android:layout_marginTop="8dp"
         android:backgroundTint="@color/colorPrimary"
-        android:text="super cercanos" />
+        android:text="super cercanos"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_ver"
+        app:layout_constraintVertical_bias="0.43" />
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

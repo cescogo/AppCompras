@@ -45,9 +45,19 @@ public class ActividadProductos extends AppCompatActivity {
         {
             public void onClick(View v)
             { Log.i("onclick","antes");
-                calcular();
+
                 Intent intento = new Intent(getApplicationContext(), Actividad1.class);
                 startActivity(intento);
+            }
+        });
+
+        Button calcular= (Button) findViewById(R.id.bt_calc);
+        calcular.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+
+            calcular();
             }
         });
 
@@ -109,7 +119,7 @@ public class ActividadProductos extends AppCompatActivity {
             }
 
         }
-        Mensaje("total :"+aux);
+        MensajeOK("total a cancelar :"+aux);
     }
 
     public void Mensaje(String msg){

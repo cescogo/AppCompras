@@ -83,11 +83,10 @@ public class Actividad1 extends AppCompatActivity {
         {
             public void onClick(View v)
             {
-                Log.i("onclick","si");
-                Intent intento = new Intent(getApplicationContext(), MapsActivity.class);
-                Log.i("creo el intento","si");
-                startActivity(intento);
-                Log.i("inicio el intento","si");
+
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(""));
+                intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+                startActivity(intent);
 
             }
         });
