@@ -21,6 +21,8 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.pc.proyecto.entities.Producto;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -46,7 +48,7 @@ public class ActividadProductos extends AppCompatActivity {
             public void onClick(View v)
             { Log.i("onclick","antes");
 
-                Intent intento = new Intent(getApplicationContext(), Actividad1.class);
+                Intent intento = new Intent(getApplicationContext(), PrincipalActivity.class);
                 startActivity(intento);
             }
         });
@@ -115,7 +117,7 @@ public class ActividadProductos extends AppCompatActivity {
 
             if(ch.isChecked())
             {
-                aux+=productosList.get(i).precio;
+                aux+=productosList.get(i).getPrecio();
             }
 
         }

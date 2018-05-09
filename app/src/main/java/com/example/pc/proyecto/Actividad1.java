@@ -18,6 +18,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.pc.proyecto.entities.Producto;
+
 import java.util.ArrayList;
 
 import static java.security.AccessController.getContext;
@@ -67,29 +69,18 @@ public class Actividad1 extends AppCompatActivity {
 
             }
         });
-        Button pros= (Button) findViewById(R.id.btn_ver);
+        Button pros= (Button) findViewById(R.id.bt_atras_agre);
         pros.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)
             {
-                Intent intento = new Intent(getApplicationContext(), ActividadProductos.class);
+                Intent intento = new Intent(getApplicationContext(), PrincipalActivity.class);
                 startActivity(intento);
             }
         });
 
 
-        Button sup= (Button) findViewById(R.id.btn_maps);
-        sup.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View v)
-            {
 
-                Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(""));
-                intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
-                startActivity(intent);
-
-            }
-        });
     }
 
     public void Mensaje(String msg){
@@ -138,27 +129,5 @@ public class Actividad1 extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
 
-                getMenuInflater().inflate(R.menu.menu_popup, menu);
-        return true;
-    }
-    @SuppressLint("NewApi")
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.it_descrip:
-                Intent intento = new Intent(getApplicationContext(), Integrantes.class);
-                startActivity(intento);
-                ; break;
-            case R.id.it_cancel:
-
-                finishAffinity(); // La cerramos.
-                ; break;
-
-            default: Mensaje("No clasificado"); break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }
