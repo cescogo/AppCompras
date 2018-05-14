@@ -42,16 +42,6 @@ public class ActividadProductos extends AppCompatActivity {
         basedatos=BaseDeDatos.getInstance(this);
 
         initializeList();
-        Button atras= (Button) findViewById(R.id.btn_atras);
-        atras.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View v)
-            { Log.i("onclick","antes");
-
-                Intent intento = new Intent(getApplicationContext(), PrincipalActivity.class);
-                startActivity(intento);
-            }
-        });
 
         Button calcular= (Button) findViewById(R.id.bt_calc);
         calcular.setOnClickListener(new View.OnClickListener()

@@ -2,8 +2,10 @@ package com.example.pc.proyecto;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,44 +40,46 @@ public class Actividad1 extends AppCompatActivity {
 
         agreg.setOnClickListener(new View.OnClickListener()
         {
+            public void onClick(View v) {
+                if (!Vacio()) {
+                    EditText nombreProducto = (EditText) findViewById(R.id.text_nombre);
+                    Spinner categoriaProducto = (Spinner) findViewById(R.id.sp_categoria);
+                    EditText precioProducto = (EditText) findViewById(R.id.text_precio);
+                    String nom = nombreProducto.getText().toString();
+                    String cat = categoriaProducto.getSelectedItem().toString();
+                    String pre = precioProducto.getText().toString();
+
+                    Producto c = new Producto();
+                    c.setNombre(nom);
+                    c.setCategoria(cat);
+                    c.setPrecio(Integer.parseInt(pre));
+                    basedatos.getWritableDatabase();
+                    aux = basedatos.agregarProducto(c);
+
+                    if (aux) {
+                        Mensaje("se agrego con exito");
+                        nombreProducto.setText("");
+                        categoriaProducto.setSelection(0);
+                        precioProducto.setText("");
+                    } else {
+                        Mensaje("fallo al ingresar el producto");
+                    }
+
+
+                }
+            }
+        });
+        Button pros= (Button) findViewById(R.id.but_cancel);
+        pros.setOnClickListener(new View.OnClickListener()
+        {
             public void onClick(View v)
             {
                 EditText nombreProducto = (EditText) findViewById(R.id.text_nombre);
                 Spinner categoriaProducto = (Spinner) findViewById(R.id.sp_categoria);
                 EditText precioProducto = (EditText) findViewById(R.id.text_precio);
-                String nom=nombreProducto.getText().toString();
-                String cat=categoriaProducto.getSelectedItem().toString();
-                String pre=precioProducto.getText().toString();
-
-                Producto c=new Producto();
-                c.setNombre(nom);
-                c.setCategoria(cat);
-                c.setPrecio(Integer.parseInt(pre));
-                basedatos.getWritableDatabase();
-                aux=basedatos.agregarProducto(c);
-
-                if(aux)
-                {
-                    Mensaje("se agrego con exito");
-                    nombreProducto.setText("");
-                    categoriaProducto.setSelection(0);
-                    precioProducto.setText("");
-                }
-                else
-                {
-                    Mensaje("fallo al ingresar el producto");
-                }
-
-
-            }
-        });
-        Button pros= (Button) findViewById(R.id.bt_atras_agre);
-        pros.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View v)
-            {
-                Intent intento = new Intent(getApplicationContext(), PrincipalActivity.class);
-                startActivity(intento);
+                nombreProducto.setText("");
+                categoriaProducto.setSelection(0);
+                precioProducto.setText("");
             }
         });
 
@@ -128,6 +132,35 @@ public class Actividad1 extends AppCompatActivity {
 
 
     }
+
+    private boolean Vacio()
+    {
+        EditText nombreProducto = (EditText) findViewById(R.id.text_nombre);
+        Spinner categoriaProducto = (Spinner) findViewById(R.id.sp_categoria);
+        EditText precioProducto = (EditText) findViewById(R.id.text_precio);
+        if(nombreProducto.length()==0 || precioProducto.length()==0)
+        {
+            MensajeOK("Campos de precio o productos vacio ");
+            return true;
+        }
+        else if(categoriaProducto.getSelectedItem().toString().equals("Seleccione una categoria"))
+        {
+            MensajeOK("Seleccione una categoria");
+            return true;
+        }
+        else {return false;}
+    }
+    public void MensajeOK(String msg){
+        View v1 = getWindow().getDecorView().getRootView();
+        AlertDialog.Builder builder1 = new AlertDialog.Builder( v1.getContext());
+        builder1.setMessage(msg);
+        builder1.setCancelable(true);
+        builder1.setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {} });
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+        ;}
 
 
 }

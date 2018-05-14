@@ -66,51 +66,54 @@ public class UserActivity extends AppCompatActivity{
     }
 
     private void loadWebServiceRegister() {
-        progress = new ProgressDialog(this);
-        progress.setMessage("Cargando....");
-        progress.show();
+        if (Vacio()) {
+            progress = new ProgressDialog(this);
+            progress.setMessage("Cargando....");
+            progress.show();
 
-        String ip = getString(R.string.ip2);
-        String url=ip+"/WebServer/wsJSONRegistroMovil.php?";
-        stringRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
+            String ip = getString(R.string.ip2);
+            String url = ip + "/WebServer/wsJSONRegistroMovil.php?";
+            stringRequest = new StringRequest(Request.Method.POST, url,
+                    new Response.Listener<String>() {
 
-                    @Override
-                    public void onResponse(String response) {
-                        progress.hide();
+                        @Override
+                        public void onResponse(String response) {
+                            progress.hide();
 
-                        if (response.trim().equalsIgnoreCase("registra")){
-                            edtUsername.setText("");
-                            edtPassword.setText("");
-                            Toast.makeText(getBaseContext(),"Se ha registrado con exito",Toast.LENGTH_SHORT).show();
-                        }else{
-                            Toast.makeText(getBaseContext(),"No se ha registrado ",Toast.LENGTH_SHORT).show();
-                            Log.i("RESPUESTA: ",""+response);
+                            if (response.trim().equalsIgnoreCase("registra")) {
+                                edtUsername.setText("");
+                                edtPassword.setText("");
+                                Toast.makeText(getBaseContext(), "Se ha registrado con exito", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getBaseContext(), "No se ha registrado ", Toast.LENGTH_SHORT).show();
+                                Log.i("RESPUESTA: ", "" + response);
+                            }
+
                         }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getBaseContext(), "No se ha podido conectar", Toast.LENGTH_SHORT).show();
+                    progress.hide();
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
 
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getBaseContext(),"No se ha podido conectar",Toast.LENGTH_SHORT).show();
-                progress.hide();
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+                    String nombre = edtUsername.getText().toString();
+                    String pass = edtPassword.getText().toString();
 
-                String nombre = edtUsername.getText().toString();
-                String pass = edtPassword.getText().toString();
+                    Map<String, String> parametros = new HashMap<>();
+                    parametros.put("nombre", nombre);
+                    parametros.put("pass", pass);
 
-                Map<String, String> parametros = new HashMap<>();
-                parametros.put("nombre", nombre);
-                parametros.put("pass", pass);
+                    return parametros;
+                }
+            };
+            stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            VolleySingleton.getIntanciaVolley(getBaseContext()).addToRequestQueue(stringRequest);
+        }
 
-                return parametros;
-            }
-        };
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS * 2, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        VolleySingleton.getIntanciaVolley(getBaseContext()).addToRequestQueue(stringRequest);
     }
 
     private void loadWebServiceLogin() {
@@ -175,4 +178,38 @@ public class UserActivity extends AppCompatActivity{
         AlertDialog alert11 = builder1.create();
         alert11.show();
         ;}
+
+        private boolean Vacio()
+
+        {
+            String nombre = edtUsername.getText().toString();
+
+            String pass = edtPassword.getText().toString();
+            if(nombre.length()!=0 && pass.length()!=0)
+            {
+                return !EspacioBlanco();
+            }
+
+            else {
+                MensajeOK("Usuario o contraseña en blanco");
+                return false;
+            }
+
+        }
+
+        private boolean EspacioBlanco()
+        {
+            String nombre = edtUsername.getText().toString();
+            char[] blanco=nombre.toCharArray();
+            for(int i=0; i<blanco.length;i++)
+            {
+                if(blanco[i]==32)
+                {
+                    MensajeOK("El usuario no puede tener espacios en blanco");
+                    return true;
+                }
+            }
+            return false;
+
+        }
 }
