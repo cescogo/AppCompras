@@ -1,35 +1,34 @@
 package com.example.pc.proyecto;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pc.proyecto.entities.Producto;
+import com.example.pc.proyecto.entities.Utilities;
 
-import java.util.ArrayList;
-
-import static java.security.AccessController.getContext;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 public class Actividad1 extends AppCompatActivity {
     BaseDeDatos basedatos;
     boolean aux;
-
+    private int PICK_IMAGE = 1;
+    Producto c;
+    Utilities imageAction = new Utilities();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,22 +36,24 @@ public class Actividad1 extends AppCompatActivity {
         llenar_spinner();
         basedatos=new BaseDeDatos(this);
         Button agreg= (Button) findViewById(R.id.btn_agregar);
-
+         c= new Producto();
         agreg.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v) {
                 if (!Vacio()) {
                     EditText nombreProducto = (EditText) findViewById(R.id.text_nombre);
                     Spinner categoriaProducto = (Spinner) findViewById(R.id.sp_categoria);
-                    EditText precioProducto = (EditText) findViewById(R.id.text_precio);
+                    EditText precioProducto = (EditText) findViewById(R.id.text_categoria);
+                    ImageView imagen = (ImageView) findViewById(R.id.imagen_agregar);
                     String nom = nombreProducto.getText().toString();
                     String cat = categoriaProducto.getSelectedItem().toString();
                     String pre = precioProducto.getText().toString();
 
-                    Producto c = new Producto();
+
                     c.setNombre(nom);
                     c.setCategoria(cat);
                     c.setPrecio(Integer.parseInt(pre));
+
                     basedatos.getWritableDatabase();
                     aux = basedatos.agregarProducto(c);
 
@@ -61,6 +62,7 @@ public class Actividad1 extends AppCompatActivity {
                         nombreProducto.setText("");
                         categoriaProducto.setSelection(0);
                         precioProducto.setText("");
+                        imagen.setImageResource(R.drawable.ic_menu_gallery);
                     } else {
                         Mensaje("fallo al ingresar el producto");
                     }
@@ -76,10 +78,23 @@ public class Actividad1 extends AppCompatActivity {
             {
                 EditText nombreProducto = (EditText) findViewById(R.id.text_nombre);
                 Spinner categoriaProducto = (Spinner) findViewById(R.id.sp_categoria);
-                EditText precioProducto = (EditText) findViewById(R.id.text_precio);
+                EditText precioProducto = (EditText) findViewById(R.id.text_categoria);
                 nombreProducto.setText("");
                 categoriaProducto.setSelection(0);
                 precioProducto.setText("");
+            }
+        });
+        ImageView imagen = (ImageView) findViewById(R.id.imagen_agregar);
+        imagen.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Seleccione la foto.."),PICK_IMAGE);
+
             }
         });
 
@@ -137,7 +152,7 @@ public class Actividad1 extends AppCompatActivity {
     {
         EditText nombreProducto = (EditText) findViewById(R.id.text_nombre);
         Spinner categoriaProducto = (Spinner) findViewById(R.id.sp_categoria);
-        EditText precioProducto = (EditText) findViewById(R.id.text_precio);
+        EditText precioProducto = (EditText) findViewById(R.id.text_categoria);
         if(nombreProducto.length()==0 || precioProducto.length()==0)
         {
             MensajeOK("Campos de precio o productos vacio ");
@@ -150,6 +165,27 @@ public class Actividad1 extends AppCompatActivity {
         }
         else {return false;}
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
+            if (data != null) {
+                Uri imageUri = data.getData();
+                try {
+                    ImageView imagen = (ImageView) findViewById(R.id.imagen_agregar);
+                    InputStream stream = getContentResolver().openInputStream(imageUri);
+                    Bitmap option = BitmapFactory.decodeStream(stream);
+                    imagen.setImageBitmap(option);
+
+                    c.setFoto(imageAction.getByte(option));
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
     public void MensajeOK(String msg){
         View v1 = getWindow().getDecorView().getRootView();
         AlertDialog.Builder builder1 = new AlertDialog.Builder( v1.getContext());

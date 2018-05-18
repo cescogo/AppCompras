@@ -33,6 +33,7 @@ public class BaseDeDatos extends SQLiteOpenHelper {
     public void onConfigure(SQLiteDatabase db) {
         super.onConfigure(db);
         db.setForeignKeyConstraintsEnabled(true);
+       // droptable(db);
     }
 
     @Override
@@ -42,12 +43,19 @@ public class BaseDeDatos extends SQLiteOpenHelper {
                 "(" +// Define a primary key
                 "nombre text, " +
                 "categoria text, " +
-                "precio integer" +
+                "precio integer," +
+                "imagen text"+
                 ");";
         db.execSQL(productos.toString());
         Log.i("Base de Datos", "Tabla Producto");
 
 
+    }
+    private void droptable(SQLiteDatabase db)
+    {
+        String productos = "drop table  Producto;";
+        db.execSQL(productos.toString());
+        onCreate(db);
     }
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -75,7 +83,7 @@ public class BaseDeDatos extends SQLiteOpenHelper {
     public boolean agregarProducto(Producto e){
         try{
             SQLiteDatabase db=this.getWritableDatabase();
-            db.execSQL("insert into Producto(nombre,categoria,precio) values ('"+e.getNombre()+"', '"+e.getCategoria()+"', '"+e.getPrecio()+"');");
+            db.execSQL("insert into Producto(nombre,categoria,precio,imagen) values ('"+e.getNombre()+"', '"+e.getCategoria()+"', '"+e.getPrecio()+"','"+e.getFoto()+"');");
             return true;
         }catch (SQLiteException ex){
             Log.e("Base de Datos", "Excepcion en agregar Producto", ex);
@@ -97,6 +105,7 @@ public class BaseDeDatos extends SQLiteOpenHelper {
                     aux.setNombre(cursor.getString(cursor.getColumnIndexOrThrow("nombre")));
                     aux.setCategoria(cursor.getString(cursor.getColumnIndexOrThrow("categoria")));
                     aux.setPrecio(cursor.getInt(cursor.getColumnIndexOrThrow("precio")));
+                    aux.setFoto(cursor.getString(cursor.getColumnIndex("imagen")));
                     lista.add(aux);
                     cursor.moveToNext();
                 }

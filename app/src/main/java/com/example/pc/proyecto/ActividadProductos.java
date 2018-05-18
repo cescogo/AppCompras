@@ -1,37 +1,33 @@
 package com.example.pc.proyecto;
 
 import android.annotation.SuppressLint;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.ContextMenu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import com.example.pc.proyecto.entities.Producto;
+import com.example.pc.proyecto.entities.Utilities;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
-import static java.security.AccessController.getContext;
+
+
 
 public class ActividadProductos extends AppCompatActivity {
     ArrayList<Producto> productosList = new ArrayList<Producto>();
    // RecyclerView estudiantesRecycler;
     BaseDeDatos basedatos;
+
     ArrayList<View> chs= new ArrayList<>();
     private Producto prod;
     @Override
@@ -77,8 +73,18 @@ public class ActividadProductos extends AppCompatActivity {
             ch.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
+                    Producto produc= Producto.getInstance();
                     prod= productosList.get(ch.getId());
-                    MensajeOK("nombre del producto: "+prod.getNombre()+"\n"+"categoria: "+prod.getCategoria()+"\n"+"precio : "+prod.getPrecio());
+                    produc.setNombre(prod.getNombre());
+                    produc.setCategoria(prod.getCategoria());
+                    produc.setPrecio(prod.getPrecio());
+                    produc.setFoto(prod.getFoto());
+                    FragmentManager fm = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                    Detalles_Productos  mifrag = new Detalles_Productos ();
+                    fragmentTransaction.replace(R.id.contenedor, mifrag, "Identificador1");
+                    fragmentTransaction.commit();
+
                     return true;
                 }
             });
