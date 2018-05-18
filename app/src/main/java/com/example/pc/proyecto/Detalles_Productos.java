@@ -42,8 +42,15 @@ public class Detalles_Productos extends Fragment {
         categoria.setText(producto.getCategoria());
         precio.setText(String.valueOf(producto.getPrecio()));
         ImageView imagen = (ImageView) view.findViewById(R.id.ima_fragment);
-        Bitmap load = imageAction.getImage(producto.getFoto());
-        imagen.setImageBitmap(load);
+        if(producto.getFoto().equals(" "))
+        {
+
+        }
+        else
+        {
+            Bitmap load = imageAction.getImage(producto.getFoto());
+            imagen.setImageBitmap(load);
+        }
 
 
         //return view;

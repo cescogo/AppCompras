@@ -53,7 +53,10 @@ public class Actividad1 extends AppCompatActivity {
                     c.setNombre(nom);
                     c.setCategoria(cat);
                     c.setPrecio(Integer.parseInt(pre));
-
+                    if(c.getFoto()==null)
+                    {
+                        c.setFoto(" ");
+                    }
                     basedatos.getWritableDatabase();
                     aux = basedatos.agregarProducto(c);
 
