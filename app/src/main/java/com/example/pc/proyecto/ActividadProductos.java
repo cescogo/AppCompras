@@ -3,10 +3,12 @@ package com.example.pc.proyecto;
 import android.annotation.SuppressLint;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,8 +17,19 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.example.pc.proyecto.entities.Producto;
 import com.example.pc.proyecto.entities.Utilities;
+import com.example.pc.proyecto.entities.VolleySingleton;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -27,6 +40,10 @@ public class ActividadProductos extends AppCompatActivity {
     ArrayList<Producto> productosList = new ArrayList<Producto>();
    // RecyclerView estudiantesRecycler;
     BaseDeDatos basedatos;
+    ProgressDialog progress;
+
+    JsonObjectRequest jsonObjectRequest;
+    StringRequest stringRequest;
 
     ArrayList<View> chs= new ArrayList<>();
     private Producto prod;
@@ -57,10 +74,7 @@ public class ActividadProductos extends AppCompatActivity {
 
     }
     @SuppressLint("NewApi")
-    private void mostrarProductos()
-    {
-
-
+    private void mostrarProductos(){
         LinearLayout panel= (LinearLayout) findViewById(R.id.linear_producs);
 
         for(int i=0; i<productosList.size();i++)
@@ -97,8 +111,7 @@ public class ActividadProductos extends AppCompatActivity {
 
 
     }
-    private void calcular()
-    {
+    private void calcular(){
         int aux=0;
 
         LinearLayout panel= (LinearLayout) findViewById(R.id.linear_producs);
@@ -210,6 +223,107 @@ public class ActividadProductos extends AppCompatActivity {
 
     }
 
+    private void webServiceLlenarLista(){
+        progress=new ProgressDialog(this);
+        progress.setMessage("Cargando...");
+        progress.show();
 
+        final String ip=getString(R.string.ip);
+        String url=ip+"/something/select_all.php"; //Modificar
 
+        jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                progress.hide();
+
+                Producto producto = null;
+
+                JSONArray json=response.optJSONArray("producto");
+                JSONObject jsonObject;
+
+                try {
+
+                    for (int i=0;i<json.length();i++){
+                        producto = new Producto();
+                        jsonObject = null;
+                        jsonObject=json.getJSONObject(i);
+
+                        producto.setNombre(jsonObject.optString("nombre"));
+                        producto.setPrecio(jsonObject.optInt("precion"));
+                        producto.setCategoria(jsonObject.optString("categoria"));
+                        producto.setFoto(jsonObject.optString("imagen"));
+                        productosList.add(producto);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getBaseContext(), "No se ha podido establecer conexión con el servidor" +
+                            " "+response, Toast.LENGTH_LONG).show();
+                    progress.hide();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getBaseContext(), "No se puede conectar "+error.toString(), Toast.LENGTH_LONG).show();
+                System.out.println();
+                progress.hide();
+                Log.d("ERROR: ", error.toString());
+            }
+        });
+
+        // request.add(jsonObjectRequest);
+        VolleySingleton.getIntanciaVolley(this).addToRequestQueue(jsonObjectRequest);
+    }
+
+    private void webServiceguardarLista(){
+        progress=new ProgressDialog(this);
+        progress.setMessage("Cargando...");
+        progress.show();
+
+        final String ip=getString(R.string.ip);
+        String url=ip+"/something/select_all.php"; //Modificar
+
+        jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                progress.hide();
+
+                Producto producto = null;
+
+                JSONArray json=response.optJSONArray("producto");
+                JSONObject jsonObject;
+
+                try {
+
+                    for (int i=0;i<json.length();i++){
+                        producto = new Producto();
+                        jsonObject = null;
+                        jsonObject=json.getJSONObject(i);
+
+                        producto.setNombre(jsonObject.optString("nombre"));
+                        producto.setPrecio(jsonObject.optInt("precion"));
+                        producto.setCategoria(jsonObject.optString("categoria"));
+                        producto.setFoto(jsonObject.optString("imagen"));
+                        productosList.add(producto);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getBaseContext(), "No se ha podido establecer conexión con el servidor" +
+                            " "+response, Toast.LENGTH_LONG).show();
+                    progress.hide();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getBaseContext(), "No se puede conectar "+error.toString(), Toast.LENGTH_LONG).show();
+                System.out.println();
+                progress.hide();
+                Log.d("ERROR: ", error.toString());
+            }
+        });
+
+        // request.add(jsonObjectRequest);
+        VolleySingleton.getIntanciaVolley(this).addToRequestQueue(jsonObjectRequest);
+    }
 }
