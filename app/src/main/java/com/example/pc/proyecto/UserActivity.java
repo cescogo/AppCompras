@@ -72,7 +72,7 @@ public class UserActivity extends AppCompatActivity{
             progress.show();
 
             String ip = getString(R.string.ip2);
-            String url = ip + "/WebServer/wsJSONRegistroMovil.php?";
+            String url = ip + "/webserver/usuario/registroUsuario.php?";
             stringRequest = new StringRequest(Request.Method.POST, url,
                     new Response.Listener<String>() {
 
@@ -122,7 +122,7 @@ public class UserActivity extends AppCompatActivity{
         progress.show();
 
         final String ip=getString(R.string.ip2);
-        String url=ip+"/WebServer/wsJSONConsultarUsuario.php?nombre="+edtUsername.getText().toString()+
+        String url=ip+"/webserver/usuario/consultarUsuario.php?nombre="+edtUsername.getText().toString()+
                 "&pass="+edtPassword.getText().toString();
 
         jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -139,6 +139,7 @@ public class UserActivity extends AppCompatActivity{
                     jsonObject=json.getJSONObject(0);
                     miUsuario.setNombre(jsonObject.optString("nombre"));
                     miUsuario.setPass(jsonObject.optString("pass"));
+                    Usuario.USUARIO.setNombre(jsonObject.optString("nombre"));
                     if(!miUsuario.getNombre().equals("no registrado") && !miUsuario.getPass().equals("no registrado")) {
                         Intent intent = new Intent(getApplicationContext(), PrincipalActivity.class);
                         startActivity(intent);
@@ -179,9 +180,7 @@ public class UserActivity extends AppCompatActivity{
         alert11.show();
         ;}
 
-        private boolean Vacio()
-
-        {
+    private boolean Vacio(){
             String nombre = edtUsername.getText().toString();
 
             String pass = edtPassword.getText().toString();
@@ -194,11 +193,9 @@ public class UserActivity extends AppCompatActivity{
                 MensajeOK("Usuario o contraseña en blanco");
                 return false;
             }
-
         }
 
-        private boolean EspacioBlanco()
-        {
+    private boolean EspacioBlanco(){
             String nombre = edtUsername.getText().toString();
             char[] blanco=nombre.toCharArray();
             for(int i=0; i<blanco.length;i++)
@@ -210,6 +207,5 @@ public class UserActivity extends AppCompatActivity{
                 }
             }
             return false;
-
         }
 }

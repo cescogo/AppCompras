@@ -10,6 +10,8 @@ public class Usuario {
     private String nombre;
     private String pass;
 
+    static public Usuario USUARIO = new Usuario();
+
     public Usuario(){
         id = 0;
         nombre = "";

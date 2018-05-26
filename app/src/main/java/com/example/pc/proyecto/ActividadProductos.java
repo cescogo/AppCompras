@@ -24,6 +24,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.pc.proyecto.entities.Producto;
+import com.example.pc.proyecto.entities.Usuario;
 import com.example.pc.proyecto.entities.Utilities;
 import com.example.pc.proyecto.entities.VolleySingleton;
 
@@ -55,6 +56,7 @@ public class ActividadProductos extends AppCompatActivity {
         basedatos=BaseDeDatos.getInstance(this);
 
         initializeList();
+        mostrarProductos();
 
         Button calcular= (Button) findViewById(R.id.bt_calc);
         calcular.setOnClickListener(new View.OnClickListener()
@@ -68,10 +70,9 @@ public class ActividadProductos extends AppCompatActivity {
 
     }
     public void initializeList() {
-        productosList.clear();
-        productosList=basedatos.getListaProductos();
-        mostrarProductos();
-
+        //productosList.clear();
+        //productosList=basedatos.getListaProductos();
+        webServiceLlenarLista();
     }
     @SuppressLint("NewApi")
     private void mostrarProductos(){
@@ -228,8 +229,8 @@ public class ActividadProductos extends AppCompatActivity {
         progress.setMessage("Cargando...");
         progress.show();
 
-        final String ip=getString(R.string.ip);
-        String url=ip+"/something/select_all.php"; //Modificar
+        final String ip=getString(R.string.ip2);
+        String url=ip+"/webserver/producto/ListaProductosUsuario.php?usuario="+ Usuario.USUARIO.getNombre();
 
         jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -249,7 +250,7 @@ public class ActividadProductos extends AppCompatActivity {
                         jsonObject=json.getJSONObject(i);
 
                         producto.setNombre(jsonObject.optString("nombre"));
-                        producto.setPrecio(jsonObject.optInt("precion"));
+                        producto.setPrecio(jsonObject.optInt("precio"));
                         producto.setCategoria(jsonObject.optString("categoria"));
                         producto.setFoto(jsonObject.optString("imagen"));
                         productosList.add(producto);
@@ -280,8 +281,8 @@ public class ActividadProductos extends AppCompatActivity {
         progress.setMessage("Cargando...");
         progress.show();
 
-        final String ip=getString(R.string.ip);
-        String url=ip+"/something/select_all.php"; //Modificar
+        final String ip=getString(R.string.ip2);
+        String url=ip+"/webserver/productos/listaProductos.php"; //Modificar
 
         jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
