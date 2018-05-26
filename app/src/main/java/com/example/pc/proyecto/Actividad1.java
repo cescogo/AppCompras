@@ -37,7 +37,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Actividad1 extends AppCompatActivity {
-    BaseDeDatos basedatos;
+    //BaseDeDatos basedatos;
     boolean aux;
     private int PICK_IMAGE = 1;
     Producto c;
@@ -63,7 +63,7 @@ public class Actividad1 extends AppCompatActivity {
         imagen = (ImageView) findViewById(R.id.imagen_agregar);
 
         llenar_spinner();
-        basedatos=new BaseDeDatos(this);
+        //basedatos=new BaseDeDatos(this);
         Button agreg= (Button) findViewById(R.id.btn_agregar);
         c = new Producto();
         agreg.setOnClickListener(new View.OnClickListener() {

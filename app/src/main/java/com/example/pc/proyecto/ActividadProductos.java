@@ -40,7 +40,7 @@ import java.util.ArrayList;
 public class ActividadProductos extends AppCompatActivity {
     ArrayList<Producto> productosList = new ArrayList<Producto>();
    // RecyclerView estudiantesRecycler;
-    BaseDeDatos basedatos;
+    //BaseDeDatos basedatos;
     ProgressDialog progress;
 
     JsonObjectRequest jsonObjectRequest;
@@ -53,17 +53,15 @@ public class ActividadProductos extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actividad_productos);
         llenar_spinner();
-        basedatos=BaseDeDatos.getInstance(this);
+        //basedatos=BaseDeDatos.getInstance(this);
 
         initializeList();
-        mostrarProductos();
 
         Button calcular= (Button) findViewById(R.id.bt_calc);
         calcular.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)
             {
-
             calcular();
             }
         });
@@ -80,7 +78,6 @@ public class ActividadProductos extends AppCompatActivity {
 
         for(int i=0; i<productosList.size();i++)
         {
-
             final CheckBox ch= new CheckBox(this);
             ch.setId(i);
             ch.setText(productosList.get(i).getNombre());
@@ -230,7 +227,8 @@ public class ActividadProductos extends AppCompatActivity {
         progress.show();
 
         final String ip=getString(R.string.ip2);
-        String url=ip+"/webserver/producto/ListaProductosUsuario.php?usuario="+ Usuario.USUARIO.getNombre();
+
+        String url=ip+"/webserver/producto/listaProductosUsuario.php?usuario="+ Usuario.USUARIO.getNombre();
 
         jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -243,7 +241,6 @@ public class ActividadProductos extends AppCompatActivity {
                 JSONObject jsonObject;
 
                 try {
-
                     for (int i=0;i<json.length();i++){
                         producto = new Producto();
                         jsonObject = null;
@@ -255,6 +252,7 @@ public class ActividadProductos extends AppCompatActivity {
                         producto.setFoto(jsonObject.optString("imagen"));
                         productosList.add(producto);
                     }
+                    mostrarProductos();
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Toast.makeText(getBaseContext(), "No se ha podido establecer conexión con el servidor" +
