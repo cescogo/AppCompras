@@ -234,10 +234,10 @@ public class ListaOffline extends AppCompatActivity {
         AlertDialog.Builder builder1 = new AlertDialog.Builder( v1.getContext());
         builder1.setMessage(msg);
         builder1.setCancelable(true);
-        builder1.setNegativeButton("Cancel",
+        builder1.setNegativeButton("No",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {} });
-        builder1.setPositiveButton("OK",
+        builder1.setPositiveButton("Si",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         startActivity(new Intent(getBaseContext(), UserActivity.class)
