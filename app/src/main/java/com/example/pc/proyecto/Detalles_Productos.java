@@ -29,7 +29,7 @@ public class Detalles_Productos extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, //fragment para mostrar la informacion del producto mas la imagen
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_detalles__productos, container, false);
@@ -48,7 +48,7 @@ public class Detalles_Productos extends Fragment {
         }
         else
         {
-            Bitmap load = imageAction.getImage(producto.getFoto());
+            Bitmap load = imageAction.getImage(producto.getFoto()); // seteo de la imagen convirtiendo de string a imagen
             imagen.setImageBitmap(load);
         }
 

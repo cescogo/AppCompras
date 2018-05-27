@@ -106,7 +106,7 @@ public class PrincipalActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    public void MensajeOK(String msg){
+    public void MensajeOK(String msg){ // mensaje de confirmacion para salir
         View v1 = getWindow().getDecorView().getRootView();
         AlertDialog.Builder builder1 = new AlertDialog.Builder( v1.getContext());
         builder1.setMessage(msg);

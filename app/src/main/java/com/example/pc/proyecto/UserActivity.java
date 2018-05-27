@@ -73,7 +73,7 @@ public class UserActivity extends AppCompatActivity{
         });
     }
 
-    private void loadWebServiceRegister() {
+    private void loadWebServiceRegister() { // se comunica con el servidor para registrar a un usuario
         if (Vacio()) {
             progress = new ProgressDialog(this);
             progress.setMessage("Cargando....");
@@ -124,7 +124,7 @@ public class UserActivity extends AppCompatActivity{
 
     }
 
-    private void loadWebServiceLogin() {
+    private void loadWebServiceLogin() { // se comunica con elk server para comprobar que el usuario existe y darle permisos de ingresar
         progress=new ProgressDialog(this);
         progress.setMessage("Cargando...");
         progress.show();
@@ -188,7 +188,7 @@ public class UserActivity extends AppCompatActivity{
         alert11.show();
         ;}
 
-    private boolean Vacio(){
+    private boolean Vacio(){ // se validan los campos para verificar que no vayan datos vacios al registrar a un usuario
             String nombre = edtUsername.getText().toString();
 
             String pass = edtPassword.getText().toString();
@@ -203,7 +203,7 @@ public class UserActivity extends AppCompatActivity{
             }
         }
 
-    private boolean EspacioBlanco(){
+    private boolean EspacioBlanco(){ //valida que no se coloque espacios en blanco en el campo del usuario
             String nombre = edtUsername.getText().toString();
             char[] blanco=nombre.toCharArray();
             for(int i=0; i<blanco.length;i++)

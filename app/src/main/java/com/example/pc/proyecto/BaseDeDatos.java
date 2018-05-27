@@ -37,7 +37,7 @@ public class BaseDeDatos extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db) {
+    public void onCreate(SQLiteDatabase db) { // se crea la bd en el celular
 
         String productos = "create table " + TABLA_Producto +
                 "(" +// Define a primary key
@@ -52,7 +52,7 @@ public class BaseDeDatos extends SQLiteOpenHelper {
 
 
     }
-    public void droptable(SQLiteDatabase db)
+    public void droptable(SQLiteDatabase db) // se elimina la bd local y se vuelve a crear para que no de error al querer ingresar un producto
     {
 
         String productos = "drop table  Producto;";
@@ -82,7 +82,7 @@ public class BaseDeDatos extends SQLiteOpenHelper {
 
 // agregar producto
 
-    public boolean agregarProducto(Producto e){
+    public boolean agregarProducto(Producto e){ // se agregan l;os productosd en la bd local
         try{
             SQLiteDatabase db=this.getWritableDatabase();
             db.execSQL("insert into Producto(nombre,categoria,precio,imagen,cantidad) values ('"+e.getNombre()+"', '"+e.getCategoria()+"', '"+e.getPrecio()+"','"+e.getFoto()+"','"+ e.getCantidad()+"');");
@@ -95,7 +95,7 @@ public class BaseDeDatos extends SQLiteOpenHelper {
 
     //buscar producto
 
-    public ArrayList<Producto> getListaProductos(){
+    public ArrayList<Producto> getListaProductos(){ //se obtienen los productos de la bd local
         try{
             SQLiteDatabase db=this.getReadableDatabase();
             String query= "select * from Producto;";

@@ -67,14 +67,14 @@ public class ListaOffline extends AppCompatActivity {
 
 
 
-    public void initializeList() {
+    public void initializeList() { //se inicializa la lista tomando los datos de la bd local del celular
         productosList.clear();
         productosList=basedatos.getListaProductos();
         mostrarProductos();
 
     }
     @SuppressLint("NewApi")
-    private void mostrarProductos(){
+    private void mostrarProductos(){ //se colocan los registros de la bd en el scroll bar creando los chech y seteando los onclick
         LinearLayout panel= (LinearLayout) findViewById(R.id.linear_producs2);
 
         for(int i=0; i<productosList.size();i++)
@@ -110,7 +110,7 @@ public class ListaOffline extends AppCompatActivity {
 
 
     }
-    private void calcular(){
+    private void calcular(){ // se calcula el total a pagar con los productos seleccionados
         int aux=0;
 
         LinearLayout panel= (LinearLayout) findViewById(R.id.linear_producs2);
@@ -146,7 +146,7 @@ public class ListaOffline extends AppCompatActivity {
         alert11.show();
         ;}
 
-    public void llenar_spinner()
+    public void llenar_spinner() // llena el spinner de las categorias
     {
         Spinner s1;
         final String[] presidents = {
@@ -229,7 +229,7 @@ public class ListaOffline extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    public void MensajeSalir(String msg) {
+    public void MensajeSalir(String msg) { // pop up de confirmacion para salir  y elimina la pila de actividades de la aplicacion
         View v1 = getWindow().getDecorView().getRootView();
         AlertDialog.Builder builder1 = new AlertDialog.Builder( v1.getContext());
         builder1.setMessage(msg);

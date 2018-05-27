@@ -75,7 +75,7 @@ public class ActividadProductos extends AppCompatActivity {
         webServiceLlenarLista();
     }
     @SuppressLint("NewApi")
-    private void mostrarProductos(){
+    private void mostrarProductos(){ //se muestran los productos al usuario tomados del server
         LinearLayout panel= (LinearLayout) findViewById(R.id.linear_producs);
 
         for(int i=0; i<productosList.size();i++)
@@ -119,7 +119,7 @@ public class ActividadProductos extends AppCompatActivity {
 
 
     }
-    private void guardar(){
+    private void guardar(){ // se guardan los productos seleccionados por el usuario en la bd local
         boolean bandera=false;
 
         LinearLayout panel= (LinearLayout) findViewById(R.id.linear_producs);
@@ -155,7 +155,7 @@ public class ActividadProductos extends AppCompatActivity {
 
 
 
-    public void MensajeOK(String msg){
+    public void MensajeOK(String msg){ // confirmacion de salir y elimina la cola de la aplicacion
         View v1 = getWindow().getDecorView().getRootView();
         AlertDialog.Builder builder1 = new AlertDialog.Builder( v1.getContext());
         builder1.setMessage(msg);
@@ -169,7 +169,7 @@ public class ActividadProductos extends AppCompatActivity {
         alert11.show();
         ;}
 
-    public void llenar_spinner()
+    public void llenar_spinner() // anteriormente explicado
     {
         Spinner s1;
         final String[] presidents = {
@@ -244,7 +244,7 @@ public class ActividadProductos extends AppCompatActivity {
 
     }
 
-    private void webServiceLlenarLista(){
+    private void webServiceLlenarLista(){ // se obtienen todos los productos pertenecioentes a un usuario de la bd localizada en el server
         progress=new ProgressDialog(this);
         progress.setMessage("Cargando...");
         progress.show();
@@ -296,7 +296,7 @@ public class ActividadProductos extends AppCompatActivity {
         // request.add(jsonObjectRequest);
         VolleySingleton.getIntanciaVolley(this).addToRequestQueue(jsonObjectRequest);
     }
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    public boolean onKeyDown(int keyCode, KeyEvent event) { //se setea la ccion del boton atras
         // TODO Auto-generated method stub
         if (keyCode == event.KEYCODE_BACK) {
             MensajeSalir("Seguro que desea salir de la aplicación");
@@ -304,7 +304,7 @@ public class ActividadProductos extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    public void MensajeSalir(String msg) {
+    public void MensajeSalir(String msg) { // mensaaje de confirmacion para salir
         View v1 = getWindow().getDecorView().getRootView();
         AlertDialog.Builder builder1 = new AlertDialog.Builder( v1.getContext());
         builder1.setMessage(msg);
@@ -323,7 +323,7 @@ public class ActividadProductos extends AppCompatActivity {
         alert11.show();
     }
 
-    public void MensajeCantidad(final int pos){
+    public void MensajeCantidad(final int pos){ // pop up creada para tomar la cantidad de productos que desea comprar el usuario
         View view = (LayoutInflater.from(ActividadProductos.this)).inflate(R.layout.popup_cantidad, null);
 
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(ActividadProductos.this);

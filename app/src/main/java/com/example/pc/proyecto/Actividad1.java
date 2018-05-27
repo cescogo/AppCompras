@@ -53,7 +53,7 @@ Boolean aux;
 
     ProgressDialog progress;
 
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState){ //Se crean todas las instancias que se utilizan en la actividad
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actividad1);
 
@@ -103,7 +103,7 @@ Boolean aux;
 
 
 
-    public void llenar_spinner()
+    public void llenar_spinner() // se llena el spinner de las categorias
     {
         Spinner s1;
         final String[] presidents = {
@@ -146,7 +146,8 @@ Boolean aux;
 
     }
 
-    private boolean Vacio() {
+    private boolean Vacio() { //se validan los campos para que no vayan datos incorectos hacia la bd
+
         EditText nombreProducto = (EditText) findViewById(R.id.text_nombre);
         Spinner categoriaProducto = (Spinner) findViewById(R.id.sp_categoria);
         EditText precioProducto = (EditText) findViewById(R.id.text_categoria);
@@ -163,7 +164,7 @@ Boolean aux;
         else {return false;}
     }
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {//se convierte de imagen a string para ser almacenada en la bd
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
             if (data != null) {
@@ -196,7 +197,7 @@ Boolean aux;
         ;}
 
 
-    private void loadWebServiceRegister() {
+    private void loadWebServiceRegister() { //se envia la peticion al sefvidor para guardar el objeto producto en la bd del server
         if (!Vacio()) {
             progress = new ProgressDialog(this);
             progress.setMessage("Cargando....");
@@ -259,7 +260,7 @@ Boolean aux;
         }
 
     }
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    public boolean onKeyDown(int keyCode, KeyEvent event) { //se modifica la accion al presionar el botton de atras del celular
         // TODO Auto-generated method stub
         if (keyCode == event.KEYCODE_BACK) {
             MensajeSalir("Seguro que desea salir de la aplicación");
@@ -267,7 +268,7 @@ Boolean aux;
         return super.onKeyDown(keyCode, event);
     }
 
-    public void MensajeSalir(String msg) {
+    public void MensajeSalir(String msg) { //pop up de confirmacion para salir de esta actividad
         View v1 = getWindow().getDecorView().getRootView();
         AlertDialog.Builder builder1 = new AlertDialog.Builder( v1.getContext());
         builder1.setMessage(msg);
