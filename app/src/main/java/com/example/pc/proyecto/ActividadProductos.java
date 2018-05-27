@@ -1,6 +1,7 @@
 package com.example.pc.proyecto;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
@@ -11,11 +12,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -100,6 +103,14 @@ public class ActividadProductos extends AppCompatActivity {
                 }
             });
 
+            ch.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ch.setSelected(true);
+                    MensajeCantidad(ch.getId());
+                }
+            });
+
 
             panel.addView(ch);
 
@@ -151,7 +162,9 @@ public class ActividadProductos extends AppCompatActivity {
         builder1.setCancelable(true);
         builder1.setPositiveButton("OK",
                 new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {} });
+                    public void onClick(DialogInterface dialog, int id) { startActivity(new Intent(getBaseContext(), PrincipalActivity.class)
+                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
+                        finish();} });
         AlertDialog alert11 = builder1.create();
         alert11.show();
         ;}
@@ -196,7 +209,7 @@ public class ActividadProductos extends AppCompatActivity {
                     for(int i=0;i<productosList.size();i++)
                     {
                         panel.getChildAt(i).setVisibility(View.VISIBLE);
-                        panel.getChildAt(i).setY(i*80);
+                        panel.getChildAt(i).setY(i*60);
                     }
 
                 }
@@ -309,6 +322,29 @@ public class ActividadProductos extends AppCompatActivity {
         AlertDialog alert11 = builder1.create();
         alert11.show();
     }
+
+    public void MensajeCantidad(final int pos){
+        View view = (LayoutInflater.from(ActividadProductos.this)).inflate(R.layout.popup_cantidad, null);
+
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(ActividadProductos.this);
+        alertBuilder.setView(view);
+        //final EditText userInput = (EditText) view.findViewById(R.id.);
+       final EditText edit= (EditText) view.findViewById(R.id.edit_num_prod);
+        alertBuilder.setCancelable(true)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                       // Producto produc= Producto.getInstance();
+                        prod= productosList.get(pos);
+                        prod.setCantidad(Integer.parseInt(edit.getText().toString()));
+
+                    }
+                });
+        Dialog dialog = alertBuilder.create();
+        dialog.show();
+        ;};
 
 
 }

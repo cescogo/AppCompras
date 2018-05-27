@@ -44,7 +44,8 @@ public class BaseDeDatos extends SQLiteOpenHelper {
                 "nombre text, " +
                 "categoria text, " +
                 "precio integer," +
-                "imagen text"+
+                "imagen text,"+
+                "cantidad integer"+
                 ");";
         db.execSQL(productos.toString());
         Log.i("Base de Datos", "Tabla Producto");
@@ -84,7 +85,7 @@ public class BaseDeDatos extends SQLiteOpenHelper {
     public boolean agregarProducto(Producto e){
         try{
             SQLiteDatabase db=this.getWritableDatabase();
-            db.execSQL("insert into Producto(nombre,categoria,precio,imagen) values ('"+e.getNombre()+"', '"+e.getCategoria()+"', '"+e.getPrecio()+"','"+e.getFoto()+"');");
+            db.execSQL("insert into Producto(nombre,categoria,precio,imagen,cantidad) values ('"+e.getNombre()+"', '"+e.getCategoria()+"', '"+e.getPrecio()+"','"+e.getFoto()+"','"+ e.getCantidad()+"');");
             return true;
         }catch (SQLiteException ex){
             Log.e("Base de Datos", "Excepcion en agregar Producto", ex);
@@ -107,6 +108,7 @@ public class BaseDeDatos extends SQLiteOpenHelper {
                     aux.setCategoria(cursor.getString(cursor.getColumnIndexOrThrow("categoria")));
                     aux.setPrecio(cursor.getInt(cursor.getColumnIndexOrThrow("precio")));
                     aux.setFoto(cursor.getString(cursor.getColumnIndex("imagen")));
+                    aux.setCantidad(cursor.getInt(cursor.getColumnIndex("cantidad")));
                     lista.add(aux);
                     cursor.moveToNext();
                 }

@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 public class Producto implements Serializable {
     String nombre,categoria,foto;
-    int precio;
+    int precio,cantidad;
     private static Producto instance = null;
 
     public Producto(String nombre, String categoria, int precio) {
@@ -51,6 +51,14 @@ public class Producto implements Serializable {
 
     public void setFoto(String foto) {
         this.foto = foto;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
     }
 
     public Producto() {

@@ -81,7 +81,7 @@ public class ListaOffline extends AppCompatActivity {
         {
             final CheckBox ch= new CheckBox(this);
             ch.setId(i);
-            ch.setText(productosList.get(i).getNombre());
+            ch.setText("nom: "+productosList.get(i).getNombre()+" cant: "+productosList.get(i).getCantidad());
 
             ch.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
