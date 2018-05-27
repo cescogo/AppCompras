@@ -37,12 +37,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Actividad1 extends AppCompatActivity {
-    //BaseDeDatos basedatos;
-    boolean aux;
+
     private int PICK_IMAGE = 1;
     Producto c;
     Utilities imageAction = new Utilities();
-
+Boolean aux;
     EditText nombreProducto;
     Spinner categoriaProducto;
     EditText precioProducto;
@@ -63,36 +62,15 @@ public class Actividad1 extends AppCompatActivity {
         imagen = (ImageView) findViewById(R.id.imagen_agregar);
 
         llenar_spinner();
-        //basedatos=new BaseDeDatos(this);
+
         Button agreg= (Button) findViewById(R.id.btn_agregar);
         c = new Producto();
         agreg.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                loadWebServiceRegister();
-                /*if (!Vacio()) {
-                    String nom = nombreProducto.getText().toString();
-                    String cat = categoriaProducto.getSelectedItem().toString();
-                    String pre = precioProducto.getText().toString();
 
-                    c.setNombre(nom);
-                    c.setCategoria(cat);
-                    c.setPrecio(Integer.parseInt(pre));
-                    if(c.getFoto()==null) {
-                        c.setFoto(" ");
-                    }
-                    basedatos.getWritableDatabase();
-                    aux = basedatos.agregarProducto(c);
 
-                    if (aux) {
-                        Mensaje("se agrego con exito");
-                        nombreProducto.setText("");
-                        categoriaProducto.setSelection(0);
-                        precioProducto.setText("");
-                        imagen.setImageResource(R.drawable.ic_menu_gallery);
-                    } else {
-                        Mensaje("fallo al ingresar el producto");
-                    }
-                }*/
+                    loadWebServiceRegister();
+
             }
         });
         Button pros= (Button) findViewById(R.id.but_cancel);
@@ -122,8 +100,7 @@ public class Actividad1 extends AppCompatActivity {
 
     }
 
-    public void Mensaje(String msg){
-        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();}
+
 
     public void llenar_spinner()
     {
@@ -236,8 +213,10 @@ public class Actividad1 extends AppCompatActivity {
                                 nombreProducto.setText("");
                                 categoriaProducto.setSelection(0);
                                 precioProducto.setText("");
+
                                 imagen.setImageResource(R.drawable.ic_menu_gallery);
                                 Toast.makeText(getBaseContext(), "Se ha registrado con exito", Toast.LENGTH_SHORT).show();
+                                aux=true;
                             } else {
                                 Toast.makeText(getBaseContext(), "No se ha registrado ", Toast.LENGTH_SHORT).show();
                                 Log.i("RESPUESTA: ", "" + response);
@@ -254,6 +233,10 @@ public class Actividad1 extends AppCompatActivity {
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
 
+                    if(c.getFoto()== null)
+                    {
+                        c.setFoto(" ");
+                    }
                     String nombre = nombreProducto.getText().toString();
                     String categoria = categoriaProducto.getSelectedItem().toString();
                     String precio = precioProducto.getText().toString();

@@ -34,7 +34,7 @@ import java.util.Map;
 public class UserActivity extends AppCompatActivity{
 
     EditText edtUsername, edtPassword;
-    Button btnReg, btnLog;
+    Button btnReg, btnLog,btnoffline;
     ProgressDialog progress;
 
     StringRequest stringRequest;
@@ -50,7 +50,7 @@ public class UserActivity extends AppCompatActivity{
         edtPassword = (EditText) findViewById(R.id.edtPassword);
         btnReg = (Button) findViewById(R.id.btnReg);
         btnLog = (Button) findViewById(R.id.btnLog);
-
+        btnoffline = (Button) findViewById(R.id.but_offline);
         btnReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,6 +61,14 @@ public class UserActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 loadWebServiceLogin();
+            }
+        });
+        btnoffline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), ListaOffline.class);
+                startActivity(intent);
+
             }
         });
     }

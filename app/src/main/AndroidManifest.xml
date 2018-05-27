@@ -36,15 +36,12 @@
              You can define the keys for the debug and release targets in src/debug/ and src/release/. 
         -->
 
-
-
-
         <activity android:name=".Integrantes" />
-
         <activity
             android:name=".PrincipalActivity"
             android:label="@string/title_activity_principal"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ListaOffline"></activity>
     </application>
 
 </manifest>

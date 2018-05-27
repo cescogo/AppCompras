@@ -22,6 +22,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.example.pc.proyecto.entities.Producto;
 import com.example.pc.proyecto.entities.Usuario;
 import com.example.pc.proyecto.entities.VolleySingleton;
@@ -32,46 +33,47 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+public class ListaOffline extends AppCompatActivity {
 
-
-
-public class ActividadProductos extends AppCompatActivity {
     ArrayList<Producto> productosList = new ArrayList<Producto>();
 
-    ProgressDialog progress;
     BaseDeDatos basedatos;
-
-    JsonObjectRequest jsonObjectRequest;
-
+    ProgressDialog progress;
 
 
     private Producto prod;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_actividad_productos);
-        llenar_spinner();
+        setContentView(R.layout.activity_lista_offline);
 
+        llenar_spinner();
+        basedatos=BaseDeDatos.getInstance(this);
 
         initializeList();
-        basedatos=new BaseDeDatos(this);
-        Button calcular= (Button) findViewById(R.id.bt_gen_list);
+
+        Button calcular= (Button) findViewById(R.id.bt_calcular);
         calcular.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)
             {
-            guardar();
+                calcular();
             }
         });
-
     }
-    public void initializeList() {
 
-        webServiceLlenarLista();
+
+
+    public void initializeList() {
+        productosList.clear();
+        productosList=basedatos.getListaProductos();
+        mostrarProductos();
+
     }
     @SuppressLint("NewApi")
     private void mostrarProductos(){
-        LinearLayout panel= (LinearLayout) findViewById(R.id.linear_producs);
+        LinearLayout panel= (LinearLayout) findViewById(R.id.linear_producs2);
 
         for(int i=0; i<productosList.size();i++)
         {
@@ -91,7 +93,7 @@ public class ActividadProductos extends AppCompatActivity {
                     FragmentManager fm = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fm.beginTransaction();
                     Detalles_Productos  mifrag = new Detalles_Productos ();
-                    fragmentTransaction.replace(R.id.contenedor, mifrag, "Identificador1");
+                    fragmentTransaction.replace(R.id.contenedor2, mifrag, "Identificador2");//identificador1
                     fragmentTransaction.commit();
 
                     return true;
@@ -106,14 +108,14 @@ public class ActividadProductos extends AppCompatActivity {
 
 
     }
-    private void guardar(){
-        boolean bandera=false;
+    private void calcular(){
+        int aux=0;
 
-        LinearLayout panel= (LinearLayout) findViewById(R.id.linear_producs);
+        LinearLayout panel= (LinearLayout) findViewById(R.id.linear_producs2);
 
 
         CheckBox ch;
-        basedatos.droptable(basedatos.getReadableDatabase());
+
 
         for(int i=0;i<productosList.size();i++)
         {
@@ -121,23 +123,11 @@ public class ActividadProductos extends AppCompatActivity {
 
             if(ch.isChecked())
             {
-                basedatos.getWritableDatabase();
-                bandera=basedatos.agregarProducto(productosList.get(i));
-
+                aux+=productosList.get(i).getPrecio();
             }
 
         }
-        if(bandera)
-        {
-            MensajeOK("Lista de compras generada satisfactoriamente");
-        }
-        else
-        {
-            MensajeOK("No se genero la lista de compras");
-        }
-
-
-
+        MensajeOK("total a cancelar :"+aux);
     }
 
 
@@ -174,7 +164,7 @@ public class ActividadProductos extends AppCompatActivity {
         };
 
         //---Spinner View---
-        s1 = (Spinner) findViewById(R.id.sp_categorias2);
+        s1 = (Spinner) findViewById(R.id.sp_categorias3);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item, presidents);
 
@@ -185,8 +175,8 @@ public class ActividadProductos extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
-                LinearLayout panel= (LinearLayout) findViewById(R.id.linear_producs);
-               Spinner s1 = (Spinner) findViewById(R.id.sp_categorias2);
+                LinearLayout panel= (LinearLayout) findViewById(R.id.linear_producs2);
+                Spinner s1 = (Spinner) findViewById(R.id.sp_categorias3);
 
                 String aux= s1.getSelectedItem().toString();
                 if(aux=="Todas")
@@ -228,59 +218,5 @@ public class ActividadProductos extends AppCompatActivity {
 
 
     }
-
-    private void webServiceLlenarLista(){
-        progress=new ProgressDialog(this);
-        progress.setMessage("Cargando...");
-        progress.show();
-
-        final String ip=getString(R.string.ip2);
-
-        String url=ip+"/webserver/producto/listaProductosUsuario.php?usuario="+ Usuario.USUARIO.getNombre();
-
-        jsonObjectRequest=new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                progress.hide();
-
-                Producto producto = null;
-
-                JSONArray json=response.optJSONArray("producto");
-                JSONObject jsonObject;
-
-                try {
-                    for (int i=0;i<json.length();i++){
-                        producto = new Producto();
-                        jsonObject = null;
-                        jsonObject=json.getJSONObject(i);
-
-                        producto.setNombre(jsonObject.optString("nombre"));
-                        producto.setPrecio(jsonObject.optInt("precio"));
-                        producto.setCategoria(jsonObject.optString("categoria"));
-                        producto.setFoto(jsonObject.optString("imagen"));
-                        productosList.add(producto);
-                    }
-                    mostrarProductos();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    Toast.makeText(getBaseContext(), "No se ha podido establecer conexión con el servidor" +
-                            " "+response, Toast.LENGTH_LONG).show();
-                    progress.hide();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getBaseContext(), "no existen productos para este usuario", Toast.LENGTH_LONG).show();
-                System.out.println();
-                progress.hide();
-                Log.d("ERROR: ", error.toString());
-            }
-        });
-
-        // request.add(jsonObjectRequest);
-        VolleySingleton.getIntanciaVolley(this).addToRequestQueue(jsonObjectRequest);
-    }
-
 
 }

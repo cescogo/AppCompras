@@ -51,8 +51,9 @@ public class BaseDeDatos extends SQLiteOpenHelper {
 
 
     }
-    private void droptable(SQLiteDatabase db)
+    public void droptable(SQLiteDatabase db)
     {
+
         String productos = "drop table  Producto;";
         db.execSQL(productos.toString());
         onCreate(db);
