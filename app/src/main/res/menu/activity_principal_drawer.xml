@@ -19,16 +19,20 @@
 
     </group>
 
-    <item android:title="settings">
+    <item android:title="Información de la App">
         <menu>
             <item
                 android:id="@+id/nav_integrantes"
 
-                android:title="Integrantes" />
+                android:title="Desarrolladores" />
+            <item
+                android:id="@+id/nav_ayuda"
+
+                android:title="Ayuda" />
             <item
                 android:id="@+id/nav_cerrar"
 
-                android:title="salir" />
+                android:title="Salir" />
         </menu>
     </item>
 
