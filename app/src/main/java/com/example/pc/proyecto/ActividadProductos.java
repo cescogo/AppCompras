@@ -7,6 +7,7 @@ import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.example.pc.proyecto.entities.Producto;
 import com.example.pc.proyecto.entities.Usuario;
 import com.example.pc.proyecto.entities.VolleySingleton;
@@ -47,7 +49,7 @@ public class ActividadProductos extends AppCompatActivity {
     BaseDeDatos basedatos;
 
     JsonObjectRequest jsonObjectRequest;
-
+    StringRequest stringRequest;
 
 
     private Producto prod;
@@ -87,19 +89,9 @@ public class ActividadProductos extends AppCompatActivity {
             ch.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    Producto produc= Producto.getInstance();
-                    prod= productosList.get(ch.getId());
-                    produc.setNombre(prod.getNombre());
-                    produc.setCategoria(prod.getCategoria());
-                    produc.setPrecio(prod.getPrecio());
-                    produc.setFoto(prod.getFoto());
-                    FragmentManager fm = getFragmentManager();
-                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
-                    Detalles_Productos  mifrag = new Detalles_Productos ();
-                    fragmentTransaction.replace(R.id.contenedor, mifrag, "Identificador1");
-                    fragmentTransaction.commit();
-
+                    mostrarDialogOpciones(ch.getId());
                     return true;
+
                 }
             });
 
@@ -345,6 +337,101 @@ public class ActividadProductos extends AppCompatActivity {
         Dialog dialog = alertBuilder.create();
         dialog.show();
         ;}
+
+    private void mostrarDialogOpciones(final int chec) {
+        final CharSequence[] opciones={"Descripcion","Eliminar","Cancelar"};
+        final AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        builder.setTitle("Elige una Opción");
+        builder.setItems(opciones, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if (opciones[i].equals("Descripcion")){
+                    Producto produc= Producto.getInstance();
+                    prod= productosList.get(chec);
+                    produc.setNombre(prod.getNombre());
+                    produc.setCategoria(prod.getCategoria());
+                    produc.setPrecio(prod.getPrecio());
+                    produc.setFoto(prod.getFoto());
+                    FragmentManager fm = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                    Detalles_Productos  mifrag = new Detalles_Productos ();
+                    fragmentTransaction.replace(R.id.contenedor, mifrag, "Identificador1");
+                    fragmentTransaction.commit();
+
+                }else
+
+                    if (opciones[i].equals("Eliminar")){
+                            MensajeEliminar("seguro que desea eliminar este producto",chec);
+
+                    }else{
+                        dialogInterface.dismiss();
+                    }
+
+            }
+        });
+        builder.show();
+    }
+
+    private void webServiceDelete(final int chec) {
+        progress.setMessage("Cargando...");
+        progress.show();
+        Producto produc= productosList.get(chec);
+        String ip=getString(R.string.ip2);
+
+        String url=ip+"/webserver/producto/borrarProducto.php?nombre="+produc.getNombre()+"&usuario="+Usuario.USUARIO.getNombre();//Cambiar aqui por el nombre y y el usuario del producto
+
+        stringRequest=new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                progress.hide();
+
+                if (response.trim().equalsIgnoreCase("elimina")){
+                  Toast.makeText(getBaseContext(),"Se ha Eliminado con exito",Toast.LENGTH_SHORT).show();
+                    finish();
+                    startActivity(new Intent(getBaseContext(), ActividadProductos.class)
+                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
+
+
+                }else{
+                    if (response.trim().equalsIgnoreCase("noExiste")){
+                        Toast.makeText(getBaseContext(),"No se encuentra la persona ",Toast.LENGTH_SHORT).show();
+                        Log.i("RESPUESTA: ",""+response);
+                    }else{
+                        Toast.makeText(getBaseContext(),"No se ha Eliminado ",Toast.LENGTH_SHORT).show();
+                        Log.i("RESPUESTA: ",""+response);
+                    }
+
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getBaseContext(),"No se ha podido conectar",Toast.LENGTH_SHORT).show();
+                progress.hide();
+            }
+        });
+        //request.add(stringRequest);
+        VolleySingleton.getIntanciaVolley(this).addToRequestQueue(stringRequest);
+    }
+
+    public void MensajeEliminar(String msg,final int pos) { // mensaaje de confirmacion para salir
+        View v1 = getWindow().getDecorView().getRootView();
+        AlertDialog.Builder builder1 = new AlertDialog.Builder( v1.getContext());
+        builder1.setMessage(msg);
+        builder1.setCancelable(true);
+        builder1.setNegativeButton("No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {} });
+        builder1.setPositiveButton("Si",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        webServiceDelete(pos);
+                    } });
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
+    }
+
 
 
 }
