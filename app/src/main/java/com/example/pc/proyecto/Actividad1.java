@@ -244,9 +244,7 @@ public class Actividad1 extends AppCompatActivity {
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
 
-                    if (c.getFoto() == null) {
-                        c.setFoto(" ");
-                    }
+
                     String nombre = nombreProducto.getText().toString();
                     String categoria = categoriaProducto.getSelectedItem().toString();
                     String precio = precioProducto.getText().toString();
@@ -456,24 +454,29 @@ public class Actividad1 extends AppCompatActivity {
     }
 
     private String convertirImgString(Bitmap bitmap) {
+        if (c.getFoto() == null) {
+            return " ";
+        }
+        else {
+            ByteArrayOutputStream array = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, array);
+            byte[] imagenByte = array.toByteArray();
+            String imagenString = Base64.encodeToString(imagenByte, Base64.DEFAULT);
+            return imagenString;
+        }
 
-        ByteArrayOutputStream array=new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG,100,array);
-        byte[] imagenByte=array.toByteArray();
-        String imagenString= Base64.encodeToString(imagenByte,Base64.DEFAULT);
 
-        return imagenString;
     }
 
-    /*public boolean onKeyDown(int keyCode, KeyEvent event) { //se modifica la accion al presionar el botton de atras del celular
+    public boolean onKeyDown(int keyCode, KeyEvent event) { //se modifica la accion al presionar el botton de atras del celular
         // TODO Auto-generated method stub
         if (keyCode == event.KEYCODE_BACK) {
-            MensajeSalir("Seguro que desea salir de la aplicación");
+            MensajeSalir("Seguro que desea salir a la pantalla principal si lo hace y no preciono aceptar se borraran los datos digitados");
         }
         return super.onKeyDown(keyCode, event);
-    }*/
+    }
 
-    /*public void MensajeSalir(String msg) { //pop up de confirmacion para salir de esta actividad
+    public void MensajeSalir(String msg) { //pop up de confirmacion para salir de esta actividad
         View v1 = getWindow().getDecorView().getRootView();
         AlertDialog.Builder builder1 = new AlertDialog.Builder( v1.getContext());
         builder1.setMessage(msg);
@@ -490,5 +493,5 @@ public class Actividad1 extends AppCompatActivity {
                     } });
         AlertDialog alert11 = builder1.create();
         alert11.show();
-    }*/
+    }
 }

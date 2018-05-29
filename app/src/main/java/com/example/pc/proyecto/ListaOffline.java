@@ -125,7 +125,7 @@ public class ListaOffline extends AppCompatActivity {
 
             if(ch.isChecked())
             {
-                aux+=productosList.get(i).getPrecio();
+                aux+=productosList.get(i).getPrecio()*productosList.get(i).getCantidad() ;
             }
 
         }
@@ -224,7 +224,7 @@ public class ListaOffline extends AppCompatActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         // TODO Auto-generated method stub
         if (keyCode == event.KEYCODE_BACK) {
-            MensajeSalir("Seguro que desea salir de la aplicación");
+            MensajeSalir("Seguro que desea salir la lista de compras si no presiono calcular total se perderan los productos seleccionados");
         }
         return super.onKeyDown(keyCode, event);
     }

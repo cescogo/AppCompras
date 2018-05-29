@@ -1,13 +1,17 @@
 package com.example.pc.proyecto;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,9 +21,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 public class PrincipalActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +42,7 @@ public class PrincipalActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
     }
 
     @Override
@@ -86,9 +93,7 @@ public class PrincipalActivity extends AppCompatActivity
             startActivity(intento);
 
         } else if (id == R.id.nav_maps) {
-            Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(""));
-            intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
-            startActivity(intent);
+            abrirsuper();
 
         } else if (id == R.id.nav_integrantes) {
             Intent intento = new Intent(getApplicationContext(), Integrantes.class);
@@ -97,6 +102,38 @@ public class PrincipalActivity extends AppCompatActivity
         } else if (id == R.id.nav_cerrar) {
 
             MensajeOK("Seguro que desea salir de la aplicación");
+
+        }
+        else if(id== R.id.nav_ayuda)
+        {
+
+            View view = (LayoutInflater.from(PrincipalActivity.this)).inflate(R.layout.popup_correo, null);
+
+            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(PrincipalActivity.this);
+            alertBuilder.setView(view);
+            alertBuilder.setNegativeButton("No",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {} });
+
+            alertBuilder.setCancelable(true)
+                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                           Intent  i = new Intent(Intent.ACTION_SEND);
+                            i.setData(Uri.parse("mailto:"));
+                            String[] to = { "nazarethalfaro@gmail.com"};
+
+                            i.putExtra(Intent.EXTRA_EMAIL, to);
+                            i.putExtra(Intent.EXTRA_SUBJECT, "solicitud de ayuda");
+                            i.setType("message/rfc822");
+                            startActivity(Intent.createChooser(i, "Email"));
+
+                        }
+                    });
+            Dialog dialog = alertBuilder.create();
+            dialog.show();
 
         }
 
@@ -131,4 +168,43 @@ public class PrincipalActivity extends AppCompatActivity
         }
         return super.onKeyDown(keyCode, event);
     }
+
+    public void abrirsuper()
+    {
+        if ( !locationManager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
+            AlertNoGps();
+        }
+        else
+        {
+            Uri gmmIntentUri = Uri.parse("geo:0,0?q=supermercados");
+            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+            mapIntent.setPackage("com.google.android.apps.maps");
+            startActivity(mapIntent);
+
+        }
+    }
+    private void AlertNoGps() {
+
+
+        AlertDialog alert = null;
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("El sistema GPS esta desactivado, ¿Desea activarlo?")
+                .setCancelable(false)
+                .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                    public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                        Intent intent=new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        startActivity(intent);
+
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
+                        dialog.cancel();
+                    }
+                });
+        alert = builder.create();
+        alert.show();
+    }
+
+
 }

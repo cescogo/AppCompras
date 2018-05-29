@@ -299,7 +299,7 @@ public class ActividadProductos extends AppCompatActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) { //se setea la ccion del boton atras
         // TODO Auto-generated method stub
         if (keyCode == event.KEYCODE_BACK) {
-            MensajeSalir("Seguro que desea salir de la aplicación");
+            MensajeSalir("Seguro que desea salir a la pantalla principal si no presiono generar perdera el avance en la seleccion ");
         }
         return super.onKeyDown(keyCode, event);
     }
@@ -344,7 +344,7 @@ public class ActividadProductos extends AppCompatActivity {
                 });
         Dialog dialog = alertBuilder.create();
         dialog.show();
-        ;};
+        ;}
 
 
 }
